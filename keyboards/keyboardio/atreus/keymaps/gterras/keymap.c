@@ -36,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ,----------------------------------.              ,----------------------------------.
     |      |   È  |      |   Ô  |      |              |   "  |      |      |      |      |
     |------+------+------+------+------|              |------+------+------+------+------|
-    |  MAJ |   Ù  |SHORTC|   Ê  |   ;  |              |   Ç  |      |SHORTC|      |  MAJ |
+    |  MAJ |   Ù  |MACROS|   Ê  |   ;  |              |   Ç  |      |MACROS|      |  MAJ |
     |------+------+------+------+------+------.,------+------+------+------+------+------|
     |   À  |      |      |      |   :  |   ?  ||  ² |      |      |      |      |      |
     |------+------+------+------+------+------||------+------+------+------+------+------|
@@ -45,7 +45,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_BEPO] = LAYOUT(
     FR_B, TD(E_ACUTE), FR_P, FR_O, FR_W, FR_QUOT, FR_V, FR_D, FR_L, FR_J,
-    MT(MOD_LSFT, FR_A), TD(U), LT(_SHORTCUT, FR_I), TD(E), TD(VIRG), TD(C), FR_T, FR_S, FR_R, MT(MOD_RSFT, FR_N),
+    MT(MOD_LSFT, FR_A), TD(U), LT(_MACROS, FR_I), TD(E), TD(VIRG), TD(C), FR_T, FR_S, FR_R, MT(MOD_RSFT, FR_N),
     TD(K), FR_Y, FR_X, FR_Z, TD(DOT), FR_EXLM, FR_TILD, FR_M, FR_Q, FR_G, FR_H, FR_F,
     _______, KC_LALT, _______, KC_LCTRL, LT(_RAISE, KC_SPC), _______, _______, LT(_RAISE, KC_ENT), KC_RCTRL, KC_LGUI, KC_LALT, _______),
 
@@ -54,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /* RAISE Layer
     ,----------------------------------.              ,----------------------------------.
-    |   &  |   #  |  Up  |  @ | | { }  |              |   `  |   7  |   8  |   9  |   +  |
+    |   &  |   #  |  Up  |  { } | @ |  |              |   `  |   7  |   8  |   9  |   +  |
     |------+------+------+------+------|              |------+------+------+------+------|
     |   -  | Left |  Dwn | Rght | ( )  |              |   %  |   4  |   5  |   6  |   =  |
     |------+------+------+------+------+------.,------+------+------+------+------+------|
@@ -64,26 +64,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     `-----------------------------------------'`-----------------------------------------' */
 
   [_RAISE] = LAYOUT(
-    FR_AMPR, FR_HASH, KC_UP, FR_AT, TD(CURLY_BRACKETS), FR_GRV, KC_P7, KC_P8, KC_P9, FR_PLUS,
+    FR_AMPR, FR_HASH, KC_UP, TD(CURLY_BRACKETS), FR_AT, FR_GRV, KC_P7, KC_P8, KC_P9, FR_PLUS,
     MT(MOD_LSFT, FR_MINS), KC_LEFT, KC_DOWN, KC_RGHT, TD(PARENTHESES), FR_PERC, KC_P4, KC_P5, KC_P6, MT(MOD_RSFT, FR_EQL),
     FR_UNDS, FR_DLR, TD(SLASHES), TD(ANGLED_BRACKETS), TD(BRACKETS), TD(CURRENCY), _______, KC_BSPC, KC_P1, KC_P2, KC_P3, FR_ASTR,
     KC_ESC, KC_TAB, KC_LALT, KC_LCTRL, KC_SPC, _______, _______, _RAISE, KC_RCTRL, KC_P0, KC_LALT, KC_DEL),
 
 
-  /* SHORTCUT Layer
+  /* MACROS Layer
     ,----------------------------------.              ,----------------------------------.
-    |      |      |      | B_TAB|      |              |      |      |      |      |      |
+    |      | QUIT |      |NEWTAB|      |              |      |      |      |      |      |
     |------+------+------+------+------|              |------+------+------+------+------|
-    |SEL_A | COPY |      | PASTE|      |              |      |      |      |      |      |
+    |SE_ALL| COPY |MACROS| PASTE|      |              |      |      |MACROS|      |      |
     |------+------+------+------+------+------.,------+------+------+------+------+------|
-    |      | QUIT |      |      |      |      ||      |      |      |      |      |      |
+    |      | SAVE | CUT  |      |      |      ||      |      |      |      |      |      |
     |------+------+------+------+------+------||------+------+------+------+------+------|
     |      |      |      |      |      |      ||      |      |      |      |      |      |
     `-----------------------------------------'`-----------------------------------------' */
 
-  [_SHORTCUT] = LAYOUT(
-    _______,  _______, _______,   _______,  _______,                   _______,   _______,   _______,   _______,   _______  ,
-    _______,  _______, _______, _______, _______,                   _______, _______,   _______,   _______,   _______  ,
+  [_MACROS] = LAYOUT(
+    _______,  LCTL(FR_W), _______,   LCTL(FR_T),  _______,                   _______,   _______,   _______,   _______,   _______  ,
+    LCTL(FR_A),  LCTL(FR_C), _MACROS, LCTL(FR_V), _______,                   _______, _______,   _MACROS,   _______,   _______  ,
     _______,   _______, _______,   _______,   _______,   _______, _______, _______,   _______,   _______,   _______,   _______  ,
     _______,   _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______ ),
 
