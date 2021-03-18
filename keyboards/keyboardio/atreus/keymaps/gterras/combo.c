@@ -19,24 +19,24 @@
 
 enum combo_events {
     RESET_KEYBOARD,
-    COPY,
-    PASTE,
+    // COPY,
+    // PASTE,
 };
 
-const uint16_t PROGMEM reset_combo[] = {FR_B, FR_J, KC_LCTRL, COMBO_END};
-const uint16_t PROGMEM copy_combo[] = {FR_P, FR_U, COMBO_END};
-const uint16_t PROGMEM paste_combo[] = {FR_P, FR_E, COMBO_END};
+const uint16_t PROGMEM reset_combo[] = {FR_B, FR_J, FR_F, COMBO_END};
+// const uint16_t PROGMEM copy_combo[] = {FR_P, FR_U, COMBO_END};
+// const uint16_t PROGMEM paste_combo[] = {FR_P, FR_E, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
     [RESET_KEYBOARD] = COMBO_ACTION(reset_combo),
-    [COPY] = COMBO_ACTION(copy_combo),
-    [PASTE] = COMBO_ACTION(paste_combo),
+    // [COPY] = COMBO_ACTION(copy_combo),
+    // [PASTE] = COMBO_ACTION(paste_combo),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
   switch(combo_index) {
     case RESET_KEYBOARD: if (pressed) { reset_keyboard(); } break;
-    case COPY: if (pressed) { tap_code16(LCTL(FR_C)); } break;
-    case PASTE: if (pressed) { tap_code16(LCTL(FR_V)); } break;
+    // case COPY: if (pressed) { tap_code16(LCTL(FR_C)); } break;
+    // case PASTE: if (pressed) { tap_code16(LCTL(FR_V)); } break;
     }
 }

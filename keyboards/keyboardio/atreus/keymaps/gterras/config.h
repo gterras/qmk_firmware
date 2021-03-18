@@ -6,7 +6,7 @@
 // #define NO_AUTO_SHIFT_NUMERIC
 
 //Combo
-#define COMBO_COUNT 3
+#define COMBO_COUNT 1
 #define COMBO_TERM 50
 
 #define TAPPING_FORCE_HOLD

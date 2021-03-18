@@ -23,11 +23,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /* BÉPO Layer - Tap
     ,----------------------------------.              ,----------------------------------.
-    |   B  |   É  |   P  |   O  |   W  |              |   '  |   V  |   D  |   L  |   J  |
+    |   B  |   É  |   P  |   O  |   W  |              |   M  |   V  |   D  |   L  |   J  |
     |------+------+------+------+------|              |------+------+------+------+------|
     |   A  |   U  |   I  |   E  |   ,  |              |   C  |   T  |   S  |   R  |   N  |
     |------+------+------+------+------+------.,------+------+------+------+------+------|
-    |   K  |   Y  |   X  |   Z  |   .  |   !  ||   ~  |   M  |   Q  |   G  |   H  |   F  |
+    |   K  |   Y  |   X  |   Z  |   .  |   !  ||   ~  |   '  |   Q  |   G  |   H  |   F  |
     |------+------+------+------+------+------||------+------+------+------+------+------|
     |      |  Alt |      | Ctrl | Spc  |      ||      | Entr | CtrlR| Super|  Alt |      |
     `-----------------------------------------'`-----------------------------------------' */
@@ -44,9 +44,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     `-----------------------------------------'`-----------------------------------------' */
 
   [_BEPO] = LAYOUT(
-    FR_B, TD(E_ACUTE), FR_P, FR_O, FR_W, FR_QUOT, FR_V, FR_D, FR_L, FR_J,
+    FR_B, TD(E_ACUTE), FR_P, FR_O, FR_W, FR_M, FR_V, FR_D, FR_L, FR_J,
     MT(MOD_LSFT, FR_A), TD(U), LT(_MACROS, FR_I), TD(E), TD(VIRG), TD(C), FR_T, FR_S, FR_R, MT(MOD_RSFT, FR_N),
-    TD(K), FR_Y, FR_X, FR_Z, TD(DOT), FR_EXLM, FR_TILD, FR_M, FR_Q, FR_G, FR_H, FR_F,
+    TD(K), FR_Y, FR_X, TD(DOT), FR_Z, FR_EXLM, FR_TILD, FR_QUOT, FR_Q, FR_G, FR_H, FR_F,
     _______, KC_LALT, _______, KC_LCTRL, LT(_RAISE, KC_SPC), _______, _______, LT(_RAISE, KC_ENT), KC_RCTRL, KC_LGUI, KC_LALT, _______),
 
 
@@ -84,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_MACROS] = LAYOUT(
     _______,  LCTL(FR_W), _______,   LCTL(FR_T),  _______,                   _______,   _______,   _______,   _______,   _______  ,
     LCTL(FR_A),  LCTL(FR_C), _MACROS, LCTL(FR_V), _______,                   _______, _______,   _MACROS,   _______,   _______  ,
-    _______,   _______, _______,   _______,   _______,   _______, _______, _______,   _______,   _______,   _______,   _______  ,
+    _______,   LCTL(FR_Q), _______,   _______,   _______,   _______, _______, _______,   _______,   _______,   _______,   _______  ,
     _______,   _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______ ),
 
 
@@ -104,4 +104,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,  _______, _______, _______, _______,                   _______, _______,   _______,   _______,   _______  ,
     _______,   _______, _______,   _______,   _______,   _______, _______, _______,   _______,   _______,   _______,   _______  ,
     _______,   _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______ ),
+};
+
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+
+
+    // Disable RightCtrl+Q as it is easy to trigger it by mistake
+
+    case FR_Q:
+        // Detect the activation of only Right Ctrl
+        if ((get_mods() & MOD_BIT(KC_RCTRL)) == MOD_BIT(KC_RCTRL)) { return false; }
+        return true;
+    }
+
+    return true;
 };
