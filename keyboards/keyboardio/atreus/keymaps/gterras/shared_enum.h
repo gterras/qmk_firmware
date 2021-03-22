@@ -19,15 +19,12 @@
 enum layer_names {
     _BEPO,
     _RAISE,
-    _MACROS,
+    _ACCENT,
+    _TILING,
+    _LMACRO,
+    _RMACRO,
     _FUNC,
 };
-
-// enum custom_keycodes {
-//     COPY = SAFE_RANGE,
-//     PASTE,
-//     SELECT_ALL,
-// };
 
 enum tap_dance_key_event {
     C,
