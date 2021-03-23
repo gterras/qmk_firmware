@@ -92,6 +92,35 @@ void dot_reset(qk_tap_dance_state_t *state, void *user_data) {
     }
     state_dot = 0;
 }
+// Exclam / Question
+// ╔═══════════════════════════╗
+// ║  SINGLE_TAP:        ?     ║
+// ║  DOUBLE_SINGLE_TAP: ??    ║
+// ║  TRIPLE_SINGLE_TAP: ???   ║
+// ║  SINGLE_HOLD:       !     ║
+// ╚═══════════════════════════╝
+
+static int state_exclam  = 0;
+
+void exclam_finished(qk_tap_dance_state_t *state, void *user_data) {
+    state_exclam = cur_dance(state);
+    switch (state_exclam) {
+        case SINGLE_TAP: register_code16(FR_QUES); break;
+        case DOUBLE_SINGLE_TAP: tap_code16(FR_QUES); register_code16(FR_QUES); break;
+        case TRIPLE_SINGLE_TAP: tap_code16(FR_QUES); tap_code16(FR_QUES); register_code16(FR_QUES); break;
+        case SINGLE_HOLD: register_code16(FR_EXLM); break;
+    }
+}
+
+void exclam_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state_exclam) {
+        case SINGLE_TAP: unregister_code16(FR_QUES); break;
+        case DOUBLE_SINGLE_TAP: unregister_code16(FR_QUES); break;
+        case TRIPLE_SINGLE_TAP: unregister_code16(FR_QUES); break;
+        case SINGLE_HOLD: unregister_code16(FR_EXLM); break;
+    }
+    state_exclam = 0;
+}
 
 // Virgules
 // ╔═══════════════════════════╗
@@ -275,6 +304,7 @@ void currency_reset(qk_tap_dance_state_t *state, void *user_data) {
 // Associate tap dance with defined functionality
 qk_tap_dance_action_t tap_dance_actions[] = {
     [QUOTE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, quote_finished, quote_reset),
+    [EXCLAM] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, exclam_finished, exclam_reset),
     [DOT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dot_finished, dot_reset),
     [VIRG] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, virg_finished, virg_reset),
     [SLASHES] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, slashes_finished, slashes_reset),
