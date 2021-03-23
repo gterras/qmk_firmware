@@ -29,7 +29,7 @@ enum custom_keycodes {
     TREMA_I,
     TREMA_U,
     TREMA_Y,
-    FUNC_ACCENT,
+    //FUNC_ACCENT,
 }; 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {

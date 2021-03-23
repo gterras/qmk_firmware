@@ -44,16 +44,21 @@ uint8_t cur_dance(qk_tap_dance_state_t *state) {
 // ╚═══════════════════════════╝
 
 static int state_accent  = 0;
+void accent_each(qk_tap_dance_state_t *state, void *user_data) {
+    set_oneshot_layer(_ACCENT, ONESHOT_START);
+}
 void accent_finished(qk_tap_dance_state_t *state, void *user_data) {
     state_accent = cur_dance(state);
     switch (state_accent) {
-        case SINGLE_TAP: set_oneshot_layer(_ACCENT, ONESHOT_START); set_oneshot_layer(_ACCENT, ONESHOT_PRESSED); break;
-        case SINGLE_HOLD: set_oneshot_layer(_ACCENT, ONESHOT_START); set_oneshot_layer(_ACCENT, ONESHOT_PRESSED); break;
+        case SINGLE_TAP: set_oneshot_layer(_ACCENT, ONESHOT_START); break;
+        case SINGLE_HOLD: set_oneshot_layer(_ACCENT, ONESHOT_START); break;
         case DOUBLE_SINGLE_TAP: register_code16(FR_TILD); break;
     }
 }
 void accent_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (state_accent) {
+        case SINGLE_TAP: clear_oneshot_layer_state(ONESHOT_PRESSED); break;
+        case SINGLE_HOLD: clear_oneshot_layer_state(ONESHOT_PRESSED); break;
         case DOUBLE_SINGLE_TAP: unregister_code16(FR_TILD); break;
     }
     state_accent = 0;
@@ -296,7 +301,7 @@ void currency_reset(qk_tap_dance_state_t *state, void *user_data) {
 
 // Associate tap dance with defined functionality
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [ACCENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, accent_finished, accent_reset),
+    [ACCENT] = ACTION_TAP_DANCE_FN_ADVANCED(accent_each, accent_finished, accent_reset),
     [QUOTE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, quote_finished, quote_reset),
     [DOT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dot_finished, dot_reset),
     [VIRG] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, virg_finished, virg_reset),
