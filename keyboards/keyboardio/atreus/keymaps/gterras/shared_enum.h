@@ -27,7 +27,6 @@ enum layer_names {
 };
 
 enum tap_dance_key_event {
-    ACCENT,
     QUOTE,
     DOT,
     VIRG,
