@@ -37,119 +37,52 @@ uint8_t cur_dance(qk_tap_dance_state_t *state) {
     else return 4; // Any number higher than the maximum count value returned above
 }
 
-// C
+// _ACCENT / ~ 
 // ╔═══════════════════════════╗
-// ║  SINGLE_TAP:        c     ║
-// ║  SINGLE_HOLD:       ç     ║
+// ║  SINGLE_TAP:   _ACCENT    ║
+// ║  SINGLE_HOLD:  ~          ║
 // ╚═══════════════════════════╝
 
-static int state_c  = 0;
-
-void c_finished(qk_tap_dance_state_t *state, void *user_data) {
-    state_c = cur_dance(state);
-    switch (state_c) {
-        case SINGLE_TAP: register_code16(FR_C); break;
-        case SINGLE_HOLD: register_code16(FR_CCED); break;
+static int state_accent  = 0;
+void accent_finished(qk_tap_dance_state_t *state, void *user_data) {
+    state_accent = cur_dance(state);
+    switch (state_accent) {
+        case SINGLE_TAP: set_oneshot_layer(_ACCENT, ONESHOT_START); set_oneshot_layer(_ACCENT, ONESHOT_PRESSED); break;
+        case SINGLE_HOLD: set_oneshot_layer(_ACCENT, ONESHOT_START); set_oneshot_layer(_ACCENT, ONESHOT_PRESSED); break;
+        case DOUBLE_SINGLE_TAP: register_code16(FR_TILD); break;
     }
 }
-void c_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (state_c) {
-        case SINGLE_TAP: unregister_code16(FR_C); break;
-        case SINGLE_HOLD: unregister_code16(FR_CCED); break;
+void accent_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state_accent) {
+        case DOUBLE_SINGLE_TAP: unregister_code16(FR_TILD); break;
     }
-    state_c = 0;
+    state_accent = 0;
 }
 
-// E
+// Quotes
 // ╔═══════════════════════════╗
-// ║  SINGLE_TAP:        e     ║
-// ║  SINGLE_HOLD:       ê     ║
+// ║  SINGLE_TAP:        '     ║
+// ║  DOUBLE_SINGLE_TAP: ''    ║
+// ║  SINGLE_HOLD:       "     ║
 // ╚═══════════════════════════╝
 
-static int state_e  = 0;
+static int state_quote  = 0;
 
-void e_finished(qk_tap_dance_state_t *state, void *user_data) {
-    state_e = cur_dance(state);
-    switch (state_e) {
-        case SINGLE_TAP: register_code16(FR_E); break;
-        case SINGLE_HOLD: register_code16(FR_CIRC); register_code16(FR_E); break;
+void quote_finished(qk_tap_dance_state_t *state, void *user_data) {
+    state_quote = cur_dance(state);
+    switch (state_quote) {
+        case SINGLE_TAP: register_code16(FR_QUOT); break;
+        case DOUBLE_SINGLE_TAP: tap_code16(FR_QUOT); register_code16(FR_QUOT); break;
+        case SINGLE_HOLD: register_code16(FR_DQUO); break;
     }
 }
-void e_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (state_e) {
-        case SINGLE_TAP: unregister_code16(FR_E); break;
-        case SINGLE_HOLD: unregister_code16(FR_CIRC); unregister_code16(FR_E); break;
+void quote_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state_quote) {
+        case SINGLE_TAP: unregister_code16(FR_QUOT); break;
+        case DOUBLE_SINGLE_TAP: unregister_code16(FR_QUOT); break;
+        case SINGLE_HOLD: unregister_code16(FR_DQUO); break;
     }
-    state_e = 0;
-}
-
-// E Acute
-// ╔═══════════════════════════╗
-// ║  SINGLE_TAP:        é     ║
-// ║  SINGLE_HOLD:       è     ║
-// ╚═══════════════════════════╝
-
-static int state_e_acute  = 0;
-
-void e_acute_finished(qk_tap_dance_state_t *state, void *user_data) {
-    state_e_acute = cur_dance(state);
-    switch (state_e_acute) {
-        case SINGLE_TAP: register_code16(FR_EACU); break;
-        case SINGLE_HOLD: register_code16(FR_EGRV); break;
-    }
-}
-void e_acute_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (state_e_acute) {
-        case SINGLE_TAP: unregister_code16(FR_EACU); break;
-        case SINGLE_HOLD: unregister_code16(FR_EGRV); break;
-    }
-    state_e_acute = 0;
-}
-
-// K
-// ╔═══════════════════════════╗
-// ║  SINGLE_TAP:        k     ║
-// ║  SINGLE_HOLD:       à     ║
-// ╚═══════════════════════════╝
-
-static int state_k  = 0;
-
-void k_finished(qk_tap_dance_state_t *state, void *user_data) {
-    state_k = cur_dance(state);
-    switch (state_k) {
-        case SINGLE_TAP: register_code16(FR_K); break;
-        case SINGLE_HOLD: register_code16(FR_AGRV); break;
-    }
-}
-void k_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (state_k) {
-        case SINGLE_TAP: unregister_code16(FR_K); break;
-        case SINGLE_HOLD: unregister_code16(FR_AGRV); break;
-    }
-    state_k = 0;
-}
-
-// U
-// ╔═══════════════════════════╗
-// ║  SINGLE_TAP:        u     ║
-// ║  SINGLE_HOLD:       ù     ║
-// ╚═══════════════════════════╝
-
-static int state_u  = 0;
-
-void u_finished(qk_tap_dance_state_t *state, void *user_data) {
-    state_u = cur_dance(state);
-    switch (state_u) {
-        case SINGLE_TAP: register_code16(FR_U); break;
-        case SINGLE_HOLD: register_code16(FR_UGRV); break;
-    }
-}
-void u_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (state_u) {
-        case SINGLE_TAP: unregister_code16(FR_U); break;
-        case SINGLE_HOLD: unregister_code16(FR_UGRV); break;
-    }
-    state_u = 0;
+    state_quote = 0;
 }
 
 // Dot
@@ -363,13 +296,10 @@ void currency_reset(qk_tap_dance_state_t *state, void *user_data) {
 
 // Associate tap dance with defined functionality
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [C] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, c_finished, c_reset),
-    [E] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, e_finished, e_reset),
-    [K] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, k_finished, k_reset),
-    [U] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, u_finished, u_reset),
+    [ACCENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, accent_finished, accent_reset),
+    [QUOTE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, quote_finished, quote_reset),
     [DOT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dot_finished, dot_reset),
     [VIRG] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, virg_finished, virg_reset),
-    [E_ACUTE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, e_acute_finished, e_acute_reset),
     [SLASHES] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, slashes_finished, slashes_reset),
     [BRACKETS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, brackets_finished, brackets_reset),
     [ANGLED_BRACKETS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, angled_brackets_finished, angled_brackets_reset),

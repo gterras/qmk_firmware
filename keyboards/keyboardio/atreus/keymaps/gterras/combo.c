@@ -23,7 +23,7 @@ enum combo_events {
     // PASTE,
 };
 
-const uint16_t PROGMEM reset_combo[] = {KC_LCTRL, FR_B, FR_J, COMBO_END};
+const uint16_t PROGMEM reset_combo[] = {KC_LCTRL, FR_B, FR_M, COMBO_END};
 // const uint16_t PROGMEM copy_combo[] = {FR_P, FR_U, COMBO_END};
 // const uint16_t PROGMEM paste_combo[] = {FR_P, FR_E, COMBO_END};
 
