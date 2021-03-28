@@ -40,7 +40,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     |------+------+------+------+------|              |------+------+------+------+------|
     |   A  |   U  |   I  |   E  |   ,  |              |   C  |   T  |   S  |   R  |   N  |
     |------+------+------+------+------+------.,------+------+------+------+------+------|
-    |   K  |   Y  |   X  |   .  |   Z  |   ?  ||   !  |   '  |   Q  |   G  |   H  |   F  |
+    |   K  |   Y  |   X  |   .  |   Z  |   ?  ||      |   '  |   Q  |   G  |   H  |   F  |
     |------+------+------+------+------+------||------+------+------+------+------+------|
     | Ctrl | Alt  | Tab  |  Esc | Space|      ||      | Entr |      |      |  Alt | Ctrl |
     `-----------------------------------------'`-----------------------------------------' */
@@ -51,16 +51,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     |------+------+------+------+------|              |------+------+------+------+------|
     |      |      |      |      |   ;  |              |      |      |      |      |      |
     |------+------+------+------+------+------.,------+------+------+------+------+------|
-    |Shift |      |      |      |   :  |      ||ACCENT|   "  |      |      |      | Shift|
+    |Shift |      |      |      |   :  |   !  ||      |   "  |      |      |      | Shift|
     |------+------+------+------+------+------||------+------+------+------+------+------| 
-    |      |      | FUNC |MACRO1|RAISE |TILING||TILING| RAISE|MACRO2| FUNC |      |      |
+    |      |      | FUNC |MACRO1|RAISE |TILING||ACCENT| RAISE|MACRO2| FUNC |      |      |
     `-----------------------------------------'`-----------------------------------------' */
 
     [_BEPO] = LAYOUT(
         FR_B, FR_EACU, FR_P, FR_O, FR_W, FR_J, FR_V, FR_D, FR_L, FR_M,
-        FR_A, FR_U, FR_I, FR_E, TD(VIRG), FR_C, FR_T, FR_S, FR_R, FR_N,
-        MT(MOD_LSFT, FR_K), FR_Y, FR_X, TD(DOT), FR_Z, TD(EXCLAM), OSL(_ACCENT), TD(QUOTE), FR_Q, FR_G, FR_H, MT(MOD_RSFT, FR_F),
-        KC_LCTRL, KC_LALT, LT(_FUNC, KC_TAB), LT(_LMACRO, KC_ESC), LT(_RAISE, KC_SPC), LT(_TILING, KC_NO), LT(_TILING, KC_NO), LT(_RAISE, KC_ENT), LT(_RMACRO, KC_NO), LT(_FUNC, KC_NO), KC_LALT, KC_LCTRL ),
+        MT(MOD_LSFT, FR_A), FR_U, FR_I, FR_E, TD(VIRG), FR_C, FR_T, FR_S, FR_R, MT(MOD_LSFT, FR_N),
+        MT(MOD_LSFT, FR_K), FR_Y, FR_X, TD(DOT), FR_Z, TD(EXCLAM), KC_NO, TD(QUOTE), FR_Q, FR_G, FR_H, MT(MOD_RSFT, FR_F),
+        KC_LCTRL, KC_LALT, LT(_FUNC, KC_TAB), LT(_LMACRO, KC_ESC), LT(_RAISE, KC_SPC), LT(_TILING, KC_NO), OSL(_ACCENT), LT(_RAISE, KC_ENT), LT(_RMACRO, KC_NO), LT(_FUNC, KC_NO), KC_LALT, KC_LCTRL ),
 
 
     /* RAISE Layer
@@ -114,7 +114,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         LCTL(FR_W), LCTL(FR_N), LCTL(FR_R), LCTL(FR_S), LCTL(FR_L),                                KC_NO, KC_NO, KC_UP, KC_NO, KC_NO,
         LCTL(FR_A), KC_NO, LCTL(LCA(FR_R)), LCTL(FR_V), LCTL(FR_T),                                KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_NO,
         LSFT(LCTL(FR_K)), LCTL(FR_Y), LCTL(FR_X), LCTL(FR_C), LCTL(FR_Z), LSFT(LCTL(FR_D)), KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-        _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______),
+        _______, _______, _______, _______, _______, KC_ENT,                   _______, _______, _______, _______, _______, _______),
 
 
     /* MACROS Right Layer
@@ -141,9 +141,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     |------+------+------+------+------|              |------+------+------+------+------|
     |   Â  |   Û  |   Î  |   Ê  |      |              |   Ç  |      |      |      |      |
     |------+------+------+------+------+------.,------+------+------+------+------+------|
-    |   À  |   Ù  |   Ï  |   Ë  |      |      ||ACCENT|      |      |      |      |      |
+    |   À  |   Ù  |   Ï  |   Ë  |      |      ||      |      |      |      |      |      |
     |------+------+------+------+------+------||------+------+------+------+------+------|
-    |      |   Ü  |   Ÿ  |      |      |      ||      |      |      |      |      |      |
+    |      |   Ü  |   Ÿ  |      |      |      ||ACCENT|      |      |      |      |      |
     `-----------------------------------------'`-----------------------------------------' */
 
     [_ACCENT] = LAYOUT(
