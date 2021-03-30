@@ -91,7 +91,8 @@ void dot_reset(qk_tap_dance_state_t *state, void *user_data) {
         case SINGLE_HOLD: unregister_code16(FR_COLN); break;
     }
     state_dot = 0;
-}
+} 
+
 // Exclam / Question
 // ╔═══════════════════════════╗
 // ║  SINGLE_TAP:        ?     ║
@@ -174,6 +175,32 @@ void slashes_reset(qk_tap_dance_state_t *state, void *user_data) {
         case SINGLE_HOLD: unregister_code16(FR_BSLS); break;
     }
     state_slashes = 0;
+}
+
+// Pipe / @
+// ╔═══════════════════════════╗
+// ║  SINGLE_TAP:          |   ║
+// ║  DOUBLE_SINGLE_TAP:   ||  ║
+// ║  SINGLE_HOLD:         @   ║
+// ╚═══════════════════════════╝
+
+static int state_pipe  = 0;
+
+void pipe_finished(qk_tap_dance_state_t *state, void *user_data) {
+    state_pipe = cur_dance(state);
+    switch (state_pipe) {
+        case SINGLE_TAP: register_code16(FR_PIPE); break;
+        case DOUBLE_SINGLE_TAP: tap_code16(FR_PIPE); register_code16(FR_PIPE); break;
+        case SINGLE_HOLD: register_code16(FR_AT); break;
+    }
+}
+void pipe_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state_pipe) {
+        case SINGLE_TAP: unregister_code16(FR_PIPE); break;
+        case DOUBLE_SINGLE_TAP: unregister_code16(FR_PIPE); break;
+        case SINGLE_HOLD: unregister_code16(FR_AT); break;
+    }
+    state_pipe = 0;
 }
 
 // Brackets
@@ -304,6 +331,7 @@ void currency_reset(qk_tap_dance_state_t *state, void *user_data) {
 // Associate tap dance with defined functionality
 qk_tap_dance_action_t tap_dance_actions[] = {
     [QUOTE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, quote_finished, quote_reset),
+    [PIPE_AT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, pipe_finished, pipe_reset),
     [EXCLAM] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, exclam_finished, exclam_reset),
     [DOT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dot_finished, dot_reset),
     [VIRG] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, virg_finished, virg_reset),

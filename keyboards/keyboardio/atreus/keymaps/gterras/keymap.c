@@ -29,7 +29,11 @@ enum custom_keycodes {
     TREMA_I,
     TREMA_U,
     TREMA_Y,
-    //FUNC_ACCENT,
+    C_CED,
+    A_GRAVE,
+    E_GRAVE,
+    U_GRAVE,
+    E_ACUTE,
 }; 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -57,9 +61,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     `-----------------------------------------'`-----------------------------------------' */
 
     [_BEPO] = LAYOUT(
-        FR_B, FR_EACU, FR_P, FR_O, FR_W, FR_J, FR_V, FR_D, FR_L, FR_M,
-        MT(MOD_LSFT, FR_A), FR_U, FR_I, FR_E, TD(VIRG), FR_C, FR_T, FR_S, FR_R, MT(MOD_LSFT, FR_N),
-        MT(MOD_LSFT, FR_K), FR_Y, FR_X, TD(DOT), FR_Z, TD(EXCLAM), KC_NO, TD(QUOTE), FR_Q, FR_G, FR_H, MT(MOD_RSFT, FR_F),
+        FR_B, E_ACUTE, FR_P, FR_O, FR_W, FR_J, FR_V, FR_D, FR_L, FR_M,
+        FR_A, FR_U, FR_I, FR_E, TD(VIRG), FR_C, FR_T, FR_S, FR_R, FR_N,
+        MT(MOD_LSFT, FR_K), FR_Y, FR_X, TD(DOT), FR_Z, TD(EXCLAM), KC_NO, TD(QUOTE), FR_Q, FR_G, FR_H, MT(MOD_LSFT, FR_F),
         KC_LCTRL, KC_LALT, LT(_FUNC, KC_TAB), LT(_LMACRO, KC_ESC), LT(_RAISE, KC_SPC), LT(_TILING, KC_NO), OSL(_ACCENT), LT(_RAISE, KC_ENT), LT(_RMACRO, KC_NO), LT(_FUNC, KC_NO), KC_LALT, KC_LCTRL ),
 
 
@@ -75,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     `-----------------------------------------'`-----------------------------------------' */
 
     [_RAISE] = LAYOUT(
-        FR_AMPR, FR_HASH, KC_UP, TD(CURLY_BRACKETS), FR_AT, FR_GRV, KC_P7, KC_P8, KC_P9, FR_PLUS,
+        FR_AMPR, FR_HASH, KC_UP, TD(CURLY_BRACKETS), TD(PIPE_AT), FR_GRV, KC_P7, KC_P8, KC_P9, FR_PLUS,
         FR_MINS, KC_LEFT, KC_DOWN, KC_RGHT, TD(PARENTHESES), FR_PERC, KC_P4, KC_P5, KC_P6, FR_EQL,
         MT(MOD_LSFT, FR_UNDS), FR_DLR, TD(SLASHES), TD(ANGLED_BRACKETS), TD(BRACKETS), TD(CURRENCY), KC_DEL, KC_BSPC, KC_P1, KC_P2, KC_P3, MT(MOD_LSFT, FR_ASTR),
         _______, _______, _______, _______, _______, KC_ENT, _______, _______, _______, KC_P0, _______, _______),
@@ -141,15 +145,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     |------+------+------+------+------|              |------+------+------+------+------|
     |   Â  |   Û  |   Î  |   Ê  |      |              |   Ç  |      |      |      |      |
     |------+------+------+------+------+------.,------+------+------+------+------+------|
-    |   À  |   Ù  |   Ï  |   Ë  |      |      ||      |      |      |      |      |      |
+    |   À  |   Ù  |   Ï  |   Ë  |      |      ||      |      |      |      |      | Shift|
     |------+------+------+------+------+------||------+------+------+------+------+------|
     |      |   Ü  |   Ÿ  |      |      |      ||ACCENT|      |      |      |      |      |
     `-----------------------------------------'`-----------------------------------------' */
 
     [_ACCENT] = LAYOUT(
-        KC_NO, FR_EGRV, KC_NO, CIRC_O, KC_NO,                      KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-        CIRC_A, CIRC_U, CIRC_I, CIRC_E, KC_NO,                     FR_CCED, KC_NO, KC_NO, KC_NO, KC_NO,
-        FR_AGRV, FR_UGRV, TREMA_I, TREMA_E, KC_NO, KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+        KC_NO, E_GRAVE, KC_NO, CIRC_O, KC_NO,                      KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+        CIRC_A, CIRC_U, CIRC_I, CIRC_E, KC_NO,                     C_CED, KC_NO, KC_NO, KC_NO, KC_NO,
+        A_GRAVE, U_GRAVE, TREMA_I, TREMA_E, KC_NO, KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_LSHIFT,
         KC_NO, TREMA_U, TREMA_Y, KC_NO, KC_NO, KC_NO,       KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO),
 
 
@@ -172,10 +176,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+void accent(uint16_t keycode, int type){
+
+    bool shift_on = (get_mods() & MOD_MASK_SHIFT) ;
+
+    if (shift_on){
+        del_mods(MOD_MASK_SHIFT);
+        tap_code(KC_CAPSLOCK);
+    }
+
+    if (type == 1) tap_code16(FR_CIRC);
+    if (type == 2) tap_code16(FR_DIAE);
+
+    tap_code16(keycode);
+
+    if (shift_on) tap_code(KC_CAPSLOCK);
+}
+
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
-   switch (keycode) {
+ switch (keycode) {
 
     // Disable RightCtrl+Q as it is easy to trigger by mistake
     case FR_Q:
@@ -183,43 +204,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if ((get_mods() & MOD_BIT(KC_RCTRL)) == MOD_BIT(KC_RCTRL)) { return false; }
     return true;
 
-    case CIRC_A: 
-    if (record->event.pressed) { register_code16(FR_CIRC); register_code16(FR_A); }
-    else { unregister_code16(FR_CIRC); unregister_code16(FR_A); } break;
+    case E_ACUTE: if (record->event.pressed) accent(FR_EACU,0); break;
+    case A_GRAVE: if (record->event.pressed) accent(FR_AGRV,0); break;
+    case E_GRAVE: if (record->event.pressed) accent(FR_EGRV,0); break;
+    case U_GRAVE: if (record->event.pressed) accent(FR_UGRV,0); break;
+    case CIRC_A: if (record->event.pressed) accent(FR_A,1); break;
+    case CIRC_E: if (record->event.pressed) accent(FR_E,1); break;
+    case CIRC_I: if (record->event.pressed) accent(FR_I,1); break;
+    case CIRC_O: if (record->event.pressed) accent(FR_O,1); break;
+    case CIRC_U: if (record->event.pressed) accent(FR_U,1); break;
+    case TREMA_E: if (record->event.pressed) accent(FR_E,2); break;
+    case TREMA_I: if (record->event.pressed) accent(FR_I,2); break;
+    case TREMA_U: if (record->event.pressed) accent(FR_U,2); break;
+    case TREMA_Y: if (record->event.pressed) accent(FR_Y,2); break;
+    case C_CED: if (record->event.pressed) accent(FR_CCED,2); break;
 
-    case CIRC_E: 
-    if (record->event.pressed) { register_code16(FR_CIRC); register_code16(FR_E); }
-    else { unregister_code16(FR_CIRC); unregister_code16(FR_E); } break;
-
-    case CIRC_I:
-    if (record->event.pressed) { register_code16(FR_CIRC); register_code16(FR_I); }
-    else { unregister_code16(FR_CIRC); unregister_code16(FR_I); } break;
-
-    case CIRC_O: 
-    if (record->event.pressed) { register_code16(FR_CIRC); register_code16(FR_O); }
-    else { unregister_code16(FR_CIRC); unregister_code16(FR_O); } break;
-
-    case CIRC_U: 
-    if (record->event.pressed) { register_code16(FR_CIRC); register_code16(FR_U); }
-    else { unregister_code16(FR_CIRC); unregister_code16(FR_U); } break;
-
-    case TREMA_E: 
-    if (record->event.pressed) { register_code16(FR_DIAE); unregister_code16(FR_DIAE); register_code16(FR_E); }
-    else { unregister_code16(FR_E); } break;
-
-    case TREMA_I: 
-    if (record->event.pressed) { register_code16(FR_DIAE); unregister_code16(FR_DIAE); register_code16(FR_I); }
-    else { unregister_code16(FR_I); } break;
-
-    case TREMA_U: 
-    if (record->event.pressed) { register_code16(FR_DIAE); unregister_code16(FR_DIAE); register_code16(FR_U); }
-    else { unregister_code16(FR_U); } break;  
-
-    case TREMA_Y: 
-    if (record->event.pressed) { register_code16(FR_DIAE); unregister_code16(FR_DIAE); register_code16(FR_Y); }
-    else { unregister_code16(FR_Y); } break;
 
 }
 
 return true;
 };
+
