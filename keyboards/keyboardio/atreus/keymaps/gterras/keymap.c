@@ -199,11 +199,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
  switch (keycode) {
 
     // Disable RightCtrl+Q as it is easy to trigger by mistake
-    case FR_Q:
     // Detect the activation of RightCtrl
+    case FR_Q:
     if ((get_mods() & MOD_BIT(KC_RCTRL)) == MOD_BIT(KC_RCTRL)) { return false; }
     return true;
 
+    // Accents
     case E_ACUTE: if (record->event.pressed) accent(FR_EACU,0); break;
     case A_GRAVE: if (record->event.pressed) accent(FR_AGRV,0); break;
     case E_GRAVE: if (record->event.pressed) accent(FR_EGRV,0); break;
@@ -217,7 +218,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case TREMA_I: if (record->event.pressed) accent(FR_I,2); break;
     case TREMA_U: if (record->event.pressed) accent(FR_U,2); break;
     case TREMA_Y: if (record->event.pressed) accent(FR_Y,2); break;
-    case C_CED: if (record->event.pressed) accent(FR_CCED,2); break;
+    case C_CED: if (record->event.pressed) accent(FR_CCED,0); break;
 
 
 }
